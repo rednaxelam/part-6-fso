@@ -1,22 +1,19 @@
 import { useSelector, useDispatch } from 'react-redux'
+import { createAnecdote, makeVoteFor } from './reducers/anecdoteReducer'
 
 const App = () => {
   const anecdotes = useSelector(state => state)
   const dispatch = useDispatch()
 
   const vote = (id) => {
-    dispatch({
-      type:"VOTE",
-      payload: id
-    })
+    dispatch(makeVoteFor(id))
   }
 
   const submitAnecdote = (event) => {
     event.preventDefault()
     const content = event.target.anecdote.value
     event.target.anecdote.value = ''
-    const action = {type: "CREATE_ANECDOTE", payload: content}
-    dispatch(action)
+    dispatch(createAnecdote(content))
   }
 
   const anecdotesToDisplay = anecdotes.toSorted((a1, a2) => {
