@@ -24,8 +24,7 @@ export const makeVoteFor = (id) => {
 }
 
 export const createAnecdote = (content) => {
-  const anecdoteObject = asObject(content)
-  return {type: 'CREATE_ANECDOTE', payload: anecdoteObject}
+  return {type: 'CREATE_ANECDOTE', payload: content}
 }
 
 const reducer = (state = initialState, action) => {
