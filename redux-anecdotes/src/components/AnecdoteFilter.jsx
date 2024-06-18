@@ -8,7 +8,11 @@ const AnecdoteFilter = () => {
     dispatch(filterFor(e.target.value))
   }
 
-  return <div>
+  const style = {
+    marginBottom: 10
+  }
+
+  return <div style={style}>
     <label htmlFor="filter">filter:</label>
     <input type="text" onInput={handleInput} name="filter" id="filter" />
   </div>
