@@ -10,8 +10,9 @@ const App = () => {
   }
 
   const anecdoteQuery = useQuery({
-    queryKey: ['notes'],
-    queryFn: anecdoteService.getAll
+    queryKey: ['anecdotes'],
+    queryFn: anecdoteService.getAll,
+    refetchOnWindowFocus: false
   })
 
   if (anecdoteQuery.isLoading) {
