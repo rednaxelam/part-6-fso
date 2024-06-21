@@ -16,14 +16,14 @@ const App = () => {
         queryClient.getQueryData(['anecdotes'])
                    .map(anecdote => anecdote.id === newAnecdote.id ? newAnecdote : anecdote)
       )
+      notificationDispatch({type: 'CREATE_NOTIFICATION', payload: `anecdote ${newAnecdote.content} voted`})
+      const timeoutId = setTimeout(() => notificationDispatch({type: 'REMOVE_NOTIFICATION'}), 5000)
+      notificationDispatch({type: 'SET_TIMEOUT_ID', payload: timeoutId})
     }
   })
 
   const handleVote = (anecdote) => {
     anecdoteVoteMutation.mutate(anecdote)
-    notificationDispatch({type: 'CREATE_NOTIFICATION', payload: `anecdote ${anecdote.content} voted`})
-    const timeoutId = setTimeout(() => notificationDispatch({type: 'REMOVE_NOTIFICATION'}), 5000)
-    notificationDispatch({type: 'SET_TIMEOUT_ID', payload: timeoutId})
   }
 
   const anecdoteQuery = useQuery({

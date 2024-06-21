@@ -10,6 +10,14 @@ const AnecdoteForm = () => {
     mutationFn: anecdoteService.createAnecdote,
     onSuccess: (newAnecdote) => {
       queryClient.setQueryData(['anecdotes'], queryClient.getQueryData(['anecdotes']).concat(newAnecdote))
+      notificationDispatch({type: 'CREATE_NOTIFICATION', payload: `anecdote ${newAnecdote.content} created`})
+      const timeoutId = setTimeout(() => notificationDispatch({type: 'REMOVE_NOTIFICATION'}), 5000)
+      notificationDispatch({type: 'SET_TIMEOUT_ID', payload: timeoutId})
+    },
+    onError: (error) => {
+      notificationDispatch({type: 'CREATE_NOTIFICATION', payload: `anecdote too short, must have length >= 5`})
+      const timeoutId = setTimeout(() => notificationDispatch({type: 'REMOVE_NOTIFICATION'}), 5000)
+      notificationDispatch({type: 'SET_TIMEOUT_ID', payload: timeoutId})
     }
   })
 
@@ -19,9 +27,6 @@ const AnecdoteForm = () => {
     event.target.anecdote.value = ''
     
     newAnecdoteMutation.mutate(content)
-    notificationDispatch({type: 'CREATE_NOTIFICATION', payload: `anecdote ${content} created`})
-    const timeoutId = setTimeout(() => notificationDispatch({type: 'REMOVE_NOTIFICATION'}), 5000)
-    notificationDispatch({type: 'SET_TIMEOUT_ID', payload: timeoutId})
 }
 
   return (
